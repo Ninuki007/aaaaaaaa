@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Se mata Raposo</title>
+<title>Texto DVD Bounce</title>
 <style>
   body {
     margin: 0;
@@ -46,20 +46,19 @@
 </style>
 </head>
 <body>
-  <div id="dvd-text">oãn levávorP</div>
+  <div id="dvd-text">Se Mata Raposo</div>
 
   <script>
     const dvd = document.getElementById('dvd-text');
     let x = Math.random() * (window.innerWidth - dvd.offsetWidth);
     let y = Math.random() * (window.innerHeight - dvd.offsetHeight);
-    let dx = 3; // velocidade horizontal
-    let dy = 3; // velocidade vertical
+    let dx = 3;
+    let dy = 3;
 
     function move() {
       x += dx;
       y += dy;
 
-      // Verifica colisão com as bordas da janela
       if (x + dvd.offsetWidth >= window.innerWidth || x <= 0) {
         dx = -dx;
       }
@@ -75,7 +74,6 @@
 
     move();
 
-    // Atualiza limites quando a janela é redimensionada
     window.addEventListener('resize', () => {
       if (x + dvd.offsetWidth > window.innerWidth) {
         x = window.innerWidth - dvd.offsetWidth;
