@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Texto Arrastável</title>
+  <title>Texto DVD + Mouse + GIF</title>
   <style>
     body {
       margin: 0;
-      background-color: black;
+      padding: 0;
       overflow: hidden;
       height: 100vh;
+      background: url('https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif') no-repeat center center fixed;
+      background-size: cover;
       position: relative;
     }
+
     #dvd-text {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
       font-size: 5rem;
       font-family: Arial, sans-serif;
       color: #000;
@@ -58,10 +58,34 @@
 
   <script>
     const dvd = document.getElementById('dvd-text');
+    let x = window.innerWidth / 2;
+    let y = window.innerHeight / 2;
+    let dx = 3;
+    let dy = 3;
     let isDragging = false;
     let offsetX = 0;
     let offsetY = 0;
 
+    function move() {
+      if (!isDragging) {
+        x += dx;
+        y += dy;
+
+        if (x + dvd.offsetWidth >= window.innerWidth || x <= 0) {
+          dx = -dx;
+        }
+        if (y + dvd.offsetHeight >= window.innerHeight || y <= 0) {
+          dy = -dy;
+        }
+
+        dvd.style.left = x + 'px';
+        dvd.style.top = y + 'px';
+      }
+
+      requestAnimationFrame(move);
+    }
+
+    // Arrastar com o mouse
     dvd.addEventListener('mousedown', function (e) {
       isDragging = true;
       offsetX = e.clientX - dvd.offsetLeft;
@@ -74,9 +98,25 @@
 
     document.addEventListener('mousemove', function (e) {
       if (isDragging) {
-        dvd.style.left = (e.clientX - offsetX) + 'px';
-        dvd.style.top = (e.clientY - offsetY) + 'px';
-        dvd.style.transform = 'none';
+        x = e.clientX - offsetX;
+        y = e.clientY - offsetY;
+        dvd.style.left = x + 'px';
+        dvd.style.top = y + 'px';
+      }
+    });
+
+    // Inicia posição e animação
+    dvd.style.left = x + 'px';
+    dvd.style.top = y + 'px';
+    move();
+
+    // Ajusta se a janela for redimensionada
+    window.addEventListener('resize', () => {
+      if (x + dvd.offsetWidth > window.innerWidth) {
+        x = window.innerWidth - dvd.offsetWidth;
+      }
+      if (y + dvd.offsetHeight > window.innerHeight) {
+        y = window.innerHeight - dvd.offsetHeight;
       }
     });
   </script>
