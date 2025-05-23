@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>oãn levávorP</title>
   <style>
     body {
@@ -11,12 +11,37 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #ffffff; /* você pode mudar a cor de fundo aqui */
+      background-color: #ffffff;
       font-family: Arial, sans-serif;
     }
+
     h1 {
-      font-size: 5rem; /* tamanho da fonte */
-      color: #000000;  /* cor do texto */
+      font-size: 5rem;
+      color: #000;
+      animation: rainbowGlow 3s linear infinite;
+    }
+
+    @keyframes rainbowGlow {
+      0%, 100% {
+        text-shadow:
+          0 0 10px red,
+          0 0 20px orange,
+          0 0 30px yellow,
+          0 0 40px green,
+          0 0 50px blue,
+          0 0 60px indigo,
+          0 0 70px violet;
+      }
+      50% {
+        text-shadow:
+          0 0 20px violet,
+          0 0 30px indigo,
+          0 0 40px blue,
+          0 0 50px green,
+          0 0 60px yellow,
+          0 0 70px orange,
+          0 0 80px red;
+      }
     }
   </style>
 </head>
