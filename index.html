@@ -1,85 +1,82 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Texto DVD Bounce</title>
-<style>
-  body {
-    margin: 0;
-    background-color: black;
-    overflow: hidden;
-    height: 100vh;
-    position: relative;
-  }
-  #dvd-text {
-    position: absolute;
-    font-size: 5rem;
-    font-family: Arial, sans-serif;
-    color: #000;
-    animation: rainbowGlow 3s linear infinite;
-    user-select: none;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Texto Arrastável</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      overflow: hidden;
+      height: 100vh;
+      position: relative;
+    }
+    #dvd-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 5rem;
+      font-family: Arial, sans-serif;
+      color: #000;
+      animation: rainbowGlow 3s linear infinite;
+      user-select: none;
+      cursor: grab;
+    }
 
-  @keyframes rainbowGlow {
-    0%, 100% {
-      text-shadow:
-        0 0 10px red,
-        0 0 20px orange,
-        0 0 30px yellow,
-        0 0 40px green,
-        0 0 50px blue,
-        0 0 60px indigo,
-        0 0 70px violet;
+    #dvd-text:active {
+      cursor: grabbing;
     }
-    50% {
-      text-shadow:
-        0 0 20px violet,
-        0 0 30px indigo,
-        0 0 40px blue,
-        0 0 50px green,
-        0 0 60px yellow,
-        0 0 70px orange,
-        0 0 80px red;
+
+    @keyframes rainbowGlow {
+      0%, 100% {
+        text-shadow:
+          0 0 10px red,
+          0 0 20px orange,
+          0 0 30px yellow,
+          0 0 40px green,
+          0 0 50px blue,
+          0 0 60px indigo,
+          0 0 70px violet;
+      }
+      50% {
+        text-shadow:
+          0 0 20px violet,
+          0 0 30px indigo,
+          0 0 40px blue,
+          0 0 50px green,
+          0 0 60px yellow,
+          0 0 70px orange,
+          0 0 80px red;
+      }
     }
-  }
-</style>
+  </style>
 </head>
 <body>
-  <div id="dvd-text">Se Mata Raposo</div>
+  <div id="dvd-text">AAAAAAAAAAAAAAAAAAAA</div>
 
   <script>
     const dvd = document.getElementById('dvd-text');
-    let x = Math.random() * (window.innerWidth - dvd.offsetWidth);
-    let y = Math.random() * (window.innerHeight - dvd.offsetHeight);
-    let dx = 3;
-    let dy = 3;
+    let isDragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
 
-    function move() {
-      x += dx;
-      y += dy;
+    dvd.addEventListener('mousedown', function (e) {
+      isDragging = true;
+      offsetX = e.clientX - dvd.offsetLeft;
+      offsetY = e.clientY - dvd.offsetTop;
+    });
 
-      if (x + dvd.offsetWidth >= window.innerWidth || x <= 0) {
-        dx = -dx;
-      }
-      if (y + dvd.offsetHeight >= window.innerHeight || y <= 0) {
-        dy = -dy;
-      }
+    document.addEventListener('mouseup', function () {
+      isDragging = false;
+    });
 
-      dvd.style.left = x + 'px';
-      dvd.style.top = y + 'px';
-
-      requestAnimationFrame(move);
-    }
-
-    move();
-
-    window.addEventListener('resize', () => {
-      if (x + dvd.offsetWidth > window.innerWidth) {
-        x = window.innerWidth - dvd.offsetWidth;
-      }
-      if (y + dvd.offsetHeight > window.innerHeight) {
-        y = window.innerHeight - dvd.offsetHeight;
+    document.addEventListener('mousemove', function (e) {
+      if (isDragging) {
+        dvd.style.left = (e.clientX - offsetX) + 'px';
+        dvd.style.top = (e.clientY - offsetY) + 'px';
+        dvd.style.transform = 'none';
       }
     });
   </script>
