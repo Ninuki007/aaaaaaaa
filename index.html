@@ -1,51 +1,89 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>oãn levávorP</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #ffffff;
-      font-family: Arial, sans-serif;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>oãn levávorP</title>
+<style>
+  body {
+    margin: 0;
+    background-color: black;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+  }
+  #dvd-text {
+    position: absolute;
+    font-size: 5rem;
+    font-family: Arial, sans-serif;
+    color: #000;
+    animation: rainbowGlow 3s linear infinite;
+    user-select: none;
+  }
 
-    h1 {
-      font-size: 5rem;
-      color: #000;
-      animation: rainbowGlow 3s linear infinite;
+  @keyframes rainbowGlow {
+    0%, 100% {
+      text-shadow:
+        0 0 10px red,
+        0 0 20px orange,
+        0 0 30px yellow,
+        0 0 40px green,
+        0 0 50px blue,
+        0 0 60px indigo,
+        0 0 70px violet;
     }
-
-    @keyframes rainbowGlow {
-      0%, 100% {
-        text-shadow:
-          0 0 10px red,
-          0 0 20px orange,
-          0 0 30px yellow,
-          0 0 40px green,
-          0 0 50px blue,
-          0 0 60px indigo,
-          0 0 70px violet;
-      }
-      50% {
-        text-shadow:
-          0 0 20px violet,
-          0 0 30px indigo,
-          0 0 40px blue,
-          0 0 50px green,
-          0 0 60px yellow,
-          0 0 70px orange,
-          0 0 80px red;
-      }
+    50% {
+      text-shadow:
+        0 0 20px violet,
+        0 0 30px indigo,
+        0 0 40px blue,
+        0 0 50px green,
+        0 0 60px yellow,
+        0 0 70px orange,
+        0 0 80px red;
     }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <h1>oãn levávorP</h1>
+  <div id="dvd-text">oãn levávorP</div>
+
+  <script>
+    const dvd = document.getElementById('dvd-text');
+    let x = Math.random() * (window.innerWidth - dvd.offsetWidth);
+    let y = Math.random() * (window.innerHeight - dvd.offsetHeight);
+    let dx = 3; // velocidade horizontal
+    let dy = 3; // velocidade vertical
+
+    function move() {
+      x += dx;
+      y += dy;
+
+      // Verifica colisão com as bordas da janela
+      if (x + dvd.offsetWidth >= window.innerWidth || x <= 0) {
+        dx = -dx;
+      }
+      if (y + dvd.offsetHeight >= window.innerHeight || y <= 0) {
+        dy = -dy;
+      }
+
+      dvd.style.left = x + 'px';
+      dvd.style.top = y + 'px';
+
+      requestAnimationFrame(move);
+    }
+
+    move();
+
+    // Atualiza limites quando a janela é redimensionada
+    window.addEventListener('resize', () => {
+      if (x + dvd.offsetWidth > window.innerWidth) {
+        x = window.innerWidth - dvd.offsetWidth;
+      }
+      if (y + dvd.offsetHeight > window.innerHeight) {
+        y = window.innerHeight - dvd.offsetHeight;
+      }
+    });
+  </script>
 </body>
 </html>
